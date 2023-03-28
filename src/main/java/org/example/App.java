@@ -22,13 +22,9 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-
-        ImageChooserButton fileChooserButton = new ImageChooserButton("Select image:", primaryStage);
-
-        VBox root = new VBox(fileChooserButton);
-            Scene scene = new Scene(root, 640, 320);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+        scene = new Scene(loadFXML("primary"), 640, 480);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     static void setRoot(String fxml) throws IOException {
