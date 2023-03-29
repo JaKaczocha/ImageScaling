@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" prefHeight="239.0" prefWidth="385.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
    <children>
-      <Label text="Primary View" />
-      <Button fx:id="primaryButton" onAction="#switchToSecondary" text="Select image" />
+      <Label text="Enter value " />
+      <HBox alignment="center" spacing="10">
+         <Slider fx:id="widthSlider" min="0" max="1000" snapToTicks="true" minorTickCount="5" showTickLabels="true" showTickMarks="true" />
+         <Slider fx:id="heightSlider" min="0" max="1000" snapToTicks="true" minorTickCount="5" showTickLabels="true" showTickMarks="true" />
+      </HBox>
+      <HBox alignment="center" spacing="10">
+         <Button fx:id="selectImageButton" onAction="#selectImage" text="Select image" />
+         <Button fx:id="applyChangesButton" onAction="#applyChanges" text="Show Changes" />
+         <Button fx:id="saveImageButton" onAction="#saveImage" text="Save Image" />
+      </HBox>
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
