@@ -4,12 +4,14 @@ import java.awt.*;
 import java.io.*;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 
 public class PrimaryController {
@@ -72,8 +74,42 @@ public class PrimaryController {
 
     @FXML
     private void saveImage() throws IOException {
-        // zapisz przeskalowane zdjęcie do pliku
-        ImageIO.write(outputImage, "jpg", selectedFile);
+        // Uzyskaj ścieżkę do katalogu projektu
+        String userDir = System.getProperty("user.dir");
+        File projectDir = new File(userDir);
+
+// Utwórz okno dialogowe wyboru pliku
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Zapisz jako...");
+        fileChooser.setInitialDirectory(projectDir);
+
+// Dodaj filtr plików dla formatu PNG
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Plik PNG (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+// Wyświetl okno dialogowe i pobierz wybrany plik
+        File file = fileChooser.showSaveDialog(null);
+
+        if (file != null) {
+            try {
+                // Konwertuj BufferedImage na Image i zapisz do pliku
+                ImageIO.write(outputImage, "png", file);
+
+                // Wyświetl powiadomienie o sukcesie
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Zapisano obrazek");
+                alert.setHeaderText(null);
+                alert.setContentText("Obrazek został zapisany w pliku: " + file.getAbsolutePath());
+                alert.showAndWait();
+            } catch (IOException ex) {
+                // Wyświetl powiadomienie o błędzie
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Błąd zapisu");
+                alert.setHeaderText(null);
+                alert.setContentText("Wystąpił błąd podczas zapisywania obrazka: " + ex.getMessage());
+                alert.showAndWait();
+            }
+        }
     }
 
 
