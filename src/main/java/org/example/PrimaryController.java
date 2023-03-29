@@ -50,7 +50,12 @@ public class PrimaryController {
     private void applyChanges() throws IOException {
         int Width = (int) widthSlider.getValue();
         int Height = (int) heightSlider.getValue();
-
+        if(Width <= 0) {
+            Width++;
+        }
+        if(Height <= 0) {
+            Height++;
+        }
         resizeImage(selectedFile, Width, Height);
 
 
