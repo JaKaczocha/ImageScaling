@@ -13,25 +13,25 @@ import java.io.FileNotFoundException;
 public class ImageViewer extends Stage {
 
     public ImageViewer(File file) throws FileNotFoundException {
-        // Tworzenie obiektu Image na podstawie pliku
+        // Create an Image from a file
         Image image = new Image(new FileInputStream(file));
 
-        // Tworzenie obiektu ImageView na podstawie obiektu Image
+        // Create an ImageView object from the Image object
         ImageView imageView = new ImageView(image);
 
-        // Tworzenie obiektu Pane jako kontenera dla ImageView
+        // Create a Pane object as a container for the ImageView
         Pane root = new Pane(imageView);
 
-        // Tworzenie sceny na podstawie Pane i ustawienie rozmiaru na rozmiar obrazu
+        // Create a scene from Pane and set the size to the size of the image
         Scene scene = new Scene(root, image.getWidth(), image.getHeight());
 
-        // Tworzenie nowego okna i ustawienie sceny
+        // Create a new window and set the scene
         Stage stage = new Stage();
         stage.setScene(scene);
 
-        // blokowanie rozciagania
+        // block stretching
         stage.setResizable(false);
-        // Wyświetlenie okna
+        // Display the window
         stage.show();
     }
 }

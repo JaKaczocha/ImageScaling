@@ -19,7 +19,10 @@ public class PrimaryController {
     File selectedFile;
     BufferedImage outputImage;
     BufferedImage inputImage;
-
+    @FXML
+    private Slider widthSlider;
+    @FXML
+    private Slider heightSlider;
 
     @FXML
     private void selectImage() throws IOException {
@@ -43,10 +46,7 @@ public class PrimaryController {
                 }
     }
 
-    @FXML
-    private Slider widthSlider;
-    @FXML
-    private Slider heightSlider;
+
 
     @FXML
     private void applyChanges() throws IOException {
@@ -61,11 +61,11 @@ public class PrimaryController {
         resizeImage(selectedFile, Width, Height);
 
 
-        String fileName = "temporary.jpg"; // nazwa pliku
+        String fileName = "temporary.png"; // nazwa pliku
         File imageFile = new File(fileName); // tworzenie obiektu klasy File
-        ImageIO.write(outputImage, "jpg", imageFile); // zapis obrazka do pliku
+        ImageIO.write(outputImage, "png", imageFile); // zapis obrazka do pliku
 
-        if (imageFile != null) {
+        if (imageFile.isFile()) {
             System.out.println("made image: " + imageFile.getAbsolutePath());
             ImageViewer imageViewer = new ImageViewer(imageFile);
         }
@@ -74,35 +74,40 @@ public class PrimaryController {
 
     @FXML
     private void saveImage() throws IOException {
-        // Uzyskaj ścieżkę do katalogu projektu
+        // Get the path to the project directory
         String userDir = System.getProperty("user.dir");
         File projectDir = new File(userDir);
 
-// Utwórz okno dialogowe wyboru pliku
+// Create a file selection dialog
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Zapisz jako...");
         fileChooser.setInitialDirectory(projectDir);
 
-// Dodaj filtr plików dla formatu PNG
+// Add file filter for * format
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Plik PNG (*.png)", "*.png");
         fileChooser.getExtensionFilters().add(extFilter);
-
-// Wyświetl okno dialogowe i pobierz wybrany plik
+        extFilter = new FileChooser.ExtensionFilter("Plik JPG (*.jpg)", "*.jpg");
+        fileChooser.getExtensionFilters().add(extFilter);
+        extFilter = new FileChooser.ExtensionFilter("Plik JPEG (*.jpeg)", "*.jpeg");
+        fileChooser.getExtensionFilters().add(extFilter);
+        extFilter = new FileChooser.ExtensionFilter("Plik BMP (*.bmp)", "*.bmp");
+        fileChooser.getExtensionFilters().add(extFilter);
+// Display a dialog and download the selected file
         File file = fileChooser.showSaveDialog(null);
 
         if (file != null) {
             try {
-                // Konwertuj BufferedImage na Image i zapisz do pliku
+                // Convert BufferedImage to Image and save to file
                 ImageIO.write(outputImage, "png", file);
 
-                // Wyświetl powiadomienie o sukcesie
+                // Display success notification
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Zapisano obrazek");
                 alert.setHeaderText(null);
                 alert.setContentText("Obrazek został zapisany w pliku: " + file.getAbsolutePath());
                 alert.showAndWait();
             } catch (IOException ex) {
-                // Wyświetl powiadomienie o błędzie
+                // Display error notification
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Błąd zapisu");
                 alert.setHeaderText(null);
@@ -119,10 +124,10 @@ public class PrimaryController {
     public void resizeImage(File inputFile, int newWidth, int newHeight) throws IOException {
         inputImage = ImageIO.read(inputFile);
 
-        // utwórz nowy obraz o wymaganych wymiarach
+        // create a new image with the required dimensions
         outputImage = new BufferedImage(newWidth, newHeight, inputImage.getType());
 
-        // skaluj oryginalne zdjęcie do nowych wymiarów
+        // scale original photo to new dimensions
         Graphics2D g2d = outputImage.createGraphics();
         g2d.drawImage(inputImage, 0, 0, newWidth, newHeight, null);
         g2d.dispose();
