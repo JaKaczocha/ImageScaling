@@ -29,6 +29,8 @@ public class PrimaryController {
 
     File selectedFile;
     ImageView imageV;
+    BufferedImage outputImage;
+    BufferedImage inputImage;
 
     @FXML
     private ImageView imageBefore;
@@ -37,22 +39,24 @@ public class PrimaryController {
     private ImageView imageAfter;
 
     @FXML
-    private void selectImageButtonPressed() { // wczytywanie obrazu - działa (!!!)
+    private void selectImageButtonPressed() throws IOException { // wczytywanie obrazu - działa (!!!)
         // Utwórz okno wyboru pliku
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Wybierz plik obrazka");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Obrazki", "*.jpg", "*.jpeg", "*.png", "*.bmp"));
 
         // Wybierz plik obrazka
-        File selectedFile = fileChooser.showOpenDialog(null);
+        selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             // Wczytaj plik obrazka i wyświetl go w ImageView
             Image image = new Image(selectedFile.toURI().toString(), 250, 250, true, false);
             imageBefore.setImage(image);
+            inputImage = ImageIO.read(selectedFile);
         }
+
     }
 
-
+    private int method;
 
     @FXML
     private Label myLabel;
@@ -76,44 +80,97 @@ public class PrimaryController {
 
     }
 
-    public Image nearestScale(ImageView imageV, int scaleBig) { //chat powiedzial ze to metoda najblizszego sasiada
-        int scale = scaleBig / 100;
-        Image imageOrg = imageV.getImage();
-        int newWidth = (int) (imageOrg.getWidth() * scale);
-        int newHeight = (int) (imageOrg.getHeight() * scale);
-
-        WritableImage imageScaled = new WritableImage(newWidth, newHeight);
-        PixelReader pixelReader = imageOrg.getPixelReader();
-        PixelWriter pixelWriter = imageScaled.getPixelWriter();
-
-        for (int y = 0; y < newHeight; y++) {
-            for (int x = 0; x < newWidth; x++) {
-                int oldX = (int) (x / scale);
-                int oldY = (int) (y / scale);
-                pixelWriter.setArgb(x, y, pixelReader.getArgb(oldX, oldY));
-            }
-        }
-        return imageScaled;
-    }
-
-
 
     @FXML
-    private void applyChangesButtonPressed(){
-        int method = 1; //tymczasowe bo nie wiem jak tu przekazac wybór metody (nie wiem tez jak zrobic zeby w ogole dzialal)
-        int skala = 210; //to samo co wyzej
-        if (method == 1) {
-            Image scaled = nearestScale(imageBefore, skala); // nie wiem czy się skaluje, bo nie zrobiłem zapisu i nie moglem sprawdzic
-            imageAfter.setImage(scaled);
+    private void applyChangesButtonPressed() throws IOException {
+        int Width = 500;
+        int Height = 500;
+
+        if(nearestNeighbor.isSelected()) {
+            method = 1;
         }
-        else if (method == 2){
-            //bicubicScale();
+        else if(bilinear.isSelected()) {
+            method = 2;
         }
-        else if (method == 3){
-            //bilinearScale();
+        else if(bicubic.isSelected()) {
+            method = 3;
+        }
+
+
+
+        if(method == 1) {
+            nearestNeighbor(selectedFile,Width,Height);
+        }
+        else if( method == 2) {
+            bilinear(selectedFile,Width,Height);
+        }
+        else if( method == 3) {
+            bicubic(selectedFile, Width, Height);
+        }
+
+        else {
+            return;
+        }
+
+
+        String fileName = "temporary.png"; // nazwa pliku
+        File imageFile = new File(fileName); // tworzenie obiektu klasy File
+        ImageIO.write(outputImage, "png", imageFile); // zapis obrazka do pliku
+
+        if (imageFile.isFile()) {
+            System.out.println("made image: " + imageFile.getAbsolutePath());
+
+
+            Image image = new Image(imageFile.toURI().toString());
+            imageAfter.setImage(image);
         }
     }
 
+    public void nearestNeighbor(File inputFile, int newWidth, int newHeight) throws IOException {
+        inputImage = ImageIO.read(inputFile);
+
+        // create a new image with the required dimensions
+        outputImage = new BufferedImage(newWidth, newHeight, inputImage.getType());
+
+        // scale original photo to new dimensions using nearest neighbor interpolation
+        Graphics2D g2d = outputImage.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        g2d.drawImage(inputImage, 0, 0, newWidth, newHeight, null);
+        g2d.dispose();
+
+        // save the new image to a file or use it as needed
+        ImageIO.write(outputImage, "jpg", new File("output.jpg"));
+    }
+    public void bilinear(File inputFile, int newWidth, int newHeight) throws IOException {
+        inputImage = ImageIO.read(inputFile);
+
+        // create a new image with the required dimensions
+        outputImage = new BufferedImage(newWidth, newHeight, inputImage.getType());
+
+        // scale original photo to new dimensions using bilinear interpolation
+        Graphics2D g2d = outputImage.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.drawImage(inputImage, 0, 0, newWidth, newHeight, null);
+        g2d.dispose();
+
+        // save the new image to a file or use it as needed
+        ImageIO.write(outputImage, "jpg", new File("output.jpg"));
+    }
+    public void bicubic(File inputFile, int newWidth, int newHeight) throws IOException {
+        inputImage = ImageIO.read(inputFile);
+
+        // create a new image with the required dimensions
+        outputImage = new BufferedImage(newWidth, newHeight, inputImage.getType());
+
+        // scale original photo to new dimensions using bicubic interpolation
+        Graphics2D g2d = outputImage.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2d.drawImage(inputImage, 0, 0, newWidth, newHeight, null);
+        g2d.dispose();
+
+        // save the new image to a file or use it as needed
+        ImageIO.write(outputImage, "jpg", new File("output.jpg"));
+    }
 
 //to zostalo z poprzedniego kodu:
 //    @FXML
