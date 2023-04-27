@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.util.StringConverter;
+
 import java.io.File;
 
 import javax.imageio.ImageIO;
@@ -31,7 +33,8 @@ public class PrimaryController {
     ImageView imageV;
     BufferedImage outputImage;
     BufferedImage inputImage;
-
+    int widthBefore;
+    int heightBefore;
     @FXML
     private ImageView imageBefore;
 
@@ -46,10 +49,14 @@ public class PrimaryController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Obrazki", "*.jpg", "*.jpeg", "*.png", "*.bmp"));
 
         // Wybierz plik obrazka
-        selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
+        File selectedFileTmp = fileChooser.showOpenDialog(null);
+        if (selectedFileTmp != null) {
+            selectedFile = selectedFileTmp;
             // Wczytaj plik obrazka i wyświetl go w ImageView
-            Image image = new Image(selectedFile.toURI().toString(), 250, 250, true, false);
+            Image image = new Image(selectedFile.toURI().toString());
+            heightBefore = (int) image.getHeight();
+            widthBefore = (int) image.getWidth();
+
             imageBefore.setImage(image);
             inputImage = ImageIO.read(selectedFile);
         }
@@ -83,9 +90,9 @@ public class PrimaryController {
 
     @FXML
     private void applyChangesButtonPressed() throws IOException {
-        int Width = 500;
-        int Height = 500;
-
+        int Width = (int) ((mySlider.getValue() / 100) * widthBefore);
+        int Height = (int) ((mySlider.getValue() / 100) * heightBefore);
+        System.out.println(Width +  " " + Height);
         if(nearestNeighbor.isSelected()) {
             method = 1;
         }
@@ -172,6 +179,22 @@ public class PrimaryController {
         ImageIO.write(outputImage, "jpg", new File("output.jpg"));
     }
 
+    @FXML
+    private Slider mySlider;
+
+    public void initialize() {
+        mySlider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double n) {
+                return String.format("%.0f%%", n);
+            }
+
+            @Override
+            public Double fromString(String s) {
+                return null;
+            }
+        });
+    }
 //to zostalo z poprzedniego kodu:
 //    @FXML
 //    private void saveImage() throws IOException {

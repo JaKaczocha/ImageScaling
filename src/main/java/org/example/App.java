@@ -39,6 +39,12 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
 
+        String fileName3 = "output.jpg"; // nazwa pliku
+        File file3 = new File(fileName3); // tworzenie obiektu klasy File
+        boolean deleted3 = file3.delete(); // usuwanie pliku i zapisanie wyniku w zmiennej deleted
+        String fileName2 = "temporary.png";
+        File file2 = new File(fileName2);
+        boolean deleted2 = file2.delete();
         String fileName = "temporary.bnp"; // nazwa pliku
         File file = new File(fileName); // tworzenie obiektu klasy File
         boolean deleted = file.delete(); // usuwanie pliku i zapisanie wyniku w zmiennej deleted
