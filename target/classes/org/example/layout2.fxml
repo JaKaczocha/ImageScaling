@@ -4,24 +4,26 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
-   <children>
+<StackPane prefHeight="480" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
+
+    <children>
       <Pane>
          <children>
                 <Button fx:id="selectImageButton" layoutX="71.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectImageButtonPressed" prefHeight="32.0" prefWidth="136.0" text="Wczytaj" />
-              <Button fx:id="applyChangesButton" onAction="#applyChangesButtonPressed" layoutX="271.0" layoutY="156.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="70.0" text="----&gt;" />
+              <Button fx:id="applyChangesButton" layoutX="271.0" layoutY="156.0" mnemonicParsing="false" onAction="#applyChangesButtonPressed" prefHeight="32.0" prefWidth="70.0" text="----&gt;" />
               <Button fx:id="saveImageButton" layoutX="410.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="155.0" text="Zapisz" />
               <ImageView fx:id="imageBefore" fitHeight="250.0" fitWidth="250.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
               <ImageView fx:id="imageAfter" fitHeight="250.0" fitWidth="250.0" layoutX="362.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-              <Label layoutX="38.0" layoutY="323.0" prefHeight="27.0" prefWidth="214.0" text="Wybierz metodę:" />
-              <Label layoutX="258.0" layoutY="323.0" prefHeight="27.0" prefWidth="167.0" text="Skalowanie:" />
-              <RadioButton fx:id="nearestNeighbor" layoutX="38.0" layoutY="353.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="233.0" selected="true" text="najbliższego sąsiada">
+              <Label layoutX="112.0" layoutY="409.0" prefHeight="27.0" prefWidth="95.0" text="Wybierz metodę:" />
+              <Label layoutX="112.0" layoutY="337.0" prefHeight="27.0" prefWidth="70.0" text="Skalowanie:" />
+              <RadioButton fx:id="nearestNeighbor" layoutX="121.0" layoutY="436.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="136.0" selected="true" text="najbliższego sąsiada">
                   <toggleGroup>
                       <ToggleGroup fx:id="metody" />
                   </toggleGroup>
               </RadioButton>
-              <RadioButton fx:id="bicubic" layoutX="38.0" layoutY="373.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="233.0" text="dwukubiczna" toggleGroup="$metody" />
-              <RadioButton fx:id="bilinear" layoutX="38.0" layoutY="393.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="233.0" text="dwuliniowa" toggleGroup="$metody" />
+              <RadioButton fx:id="bicubic" layoutX="379.0" layoutY="436.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="95.0" text="dwukubiczna" toggleGroup="$metody" />
+              <RadioButton fx:id="bilinear" layoutX="275.0" layoutY="436.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="87.0" text="dwuliniowa" toggleGroup="$metody" />
+              <Slider fx:id="mySlider" layoutX="106.0" layoutY="364.0" majorTickUnit="50" max="500" min="50" minorTickCount="0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="slider" value="0" />
          </children>
       </Pane>
    </children>
