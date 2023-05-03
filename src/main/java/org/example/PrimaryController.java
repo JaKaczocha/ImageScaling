@@ -42,7 +42,7 @@ public class PrimaryController {
     private ImageView imageAfter;
 
     @FXML
-    private void selectImageButtonPressed() throws IOException { // wczytywanie obrazu - działa (!!!)
+    private void selectImageButtonPressed() throws IOException {
         // Utwórz okno wyboru pliku
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Wybierz plik obrazka");
@@ -57,6 +57,9 @@ public class PrimaryController {
             heightBefore = (int) image.getHeight();
             widthBefore = (int) image.getWidth();
 
+            imageBefore.setFitHeight(image.getHeight());
+            imageBefore.setFitWidth(image.getWidth());
+            imageBefore.setPreserveRatio(true);
             imageBefore.setImage(image);
             inputImage = ImageIO.read(selectedFile);
         }
@@ -130,6 +133,9 @@ public class PrimaryController {
 
             Image image = new Image(imageFile.toURI().toString());
             imageAfter.setImage(image);
+            imageAfter.setFitHeight(image.getHeight());
+            imageAfter.setFitWidth(image.getWidth());
+            imageAfter.setPreserveRatio(true);
         }
     }
 

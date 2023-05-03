@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="obrazki" />
+        <module name="ImageScaling" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ImageScaling" target="11" />
       <module name="obrazki" target="11" />
       <module name="untitled1" target="11" />
     </bytecodeTargetLevel>
