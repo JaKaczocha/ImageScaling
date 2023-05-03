@@ -4,7 +4,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane prefHeight="480" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
+<ScrollPane prefHeight="480" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController"
+fitToWidth="true" fitToHeight="true">
     <content>
       <VBox spacing="10">
           <children>
@@ -31,6 +32,10 @@
                       </RadioButton>
                       <RadioButton fx:id="bicubic" layoutX="379.0" layoutY="436.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="95.0" text="dwukubiczna" toggleGroup="$metody" />
                       <RadioButton fx:id="bilinear" layoutX="275.0" layoutY="436.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="87.0" text="dwuliniowa" toggleGroup="$metody" />
+                  </children>
+              </VBox>
+              <VBox spacing="10" alignment="CENTER">
+                  <children>
                       <Label layoutX="112.0" layoutY="337.0" prefHeight="27.0" prefWidth="70.0" text="Skalowanie:" />
                       <Slider fx:id="mySlider" layoutX="106.0" layoutY="364.0" majorTickUnit="50" max="500" maxWidth="400.0" min="50" minorTickCount="0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="slider" value="0" />
                   </children>
