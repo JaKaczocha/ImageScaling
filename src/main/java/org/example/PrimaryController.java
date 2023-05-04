@@ -25,6 +25,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.image.BufferedImage;
 
 public class PrimaryController {
@@ -45,6 +46,11 @@ public class PrimaryController {
     private void selectImageButtonPressed() throws IOException {
         // Utwórz okno wyboru pliku
         FileChooser fileChooser = new FileChooser();
+
+        // Ustaw domyślny katalog na katalog projektu
+        File initialDirectory = new File(System.getProperty("user.dir") + "/image");
+        fileChooser.setInitialDirectory(initialDirectory);
+
         fileChooser.setTitle("Wybierz plik obrazka");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Obrazki", "*.jpg", "*.jpeg", "*.png", "*.bmp"));
 
@@ -62,9 +68,11 @@ public class PrimaryController {
             imageBefore.setPreserveRatio(true);
             imageBefore.setImage(image);
             inputImage = ImageIO.read(selectedFile);
+            outputImage = null;
+            imageAfter.setImage(null);
         }
-
     }
+
 
     private int method;
 
@@ -201,6 +209,56 @@ public class PrimaryController {
             }
         });
     }
+
+
+    public void buttonSave() {
+        if(outputImage == null) {
+            return;
+        }
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Obrazy", "*.jpg", "*.jpeg", "*.png", "*.gif","*.bmp");
+        fileChooser.getExtensionFilters().add(filter);
+
+        File initialDirectory = new File(System.getProperty("user.dir") + "/image");
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        File selectedFile = fileChooser.showSaveDialog(null);
+        if (selectedFile != null) {
+            try {
+                String extension = getFileExtension(selectedFile);
+                ImageIO.write(outputImage, extension, selectedFile);
+            } catch (Exception e) {
+                System.out.println("Błąd podczas zapisywania pliku: " + e.getMessage());
+            }
+        }
+    }
+
+    private String getFileExtension(File file) {
+        String extension = "";
+        String fileName = file.getName();
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex > 0 && dotIndex < fileName.length() - 1) {
+            extension = fileName.substring(dotIndex + 1);
+        }
+        return extension;
+    }
+
+
+
+
+
+
+
+
+    private String getFileExtension(String filename) {
+        String extension = "";
+        int dotIndex = filename.lastIndexOf('.');
+        if (dotIndex > 0 && dotIndex < filename.length() - 1) {
+            extension = filename.substring(dotIndex + 1);
+        }
+        return extension;
+    }
+
 //to zostalo z poprzedniego kodu:
 //    @FXML
 //    private void saveImage() throws IOException {
