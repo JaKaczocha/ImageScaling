@@ -36,11 +36,15 @@ public class PrimaryController {
     BufferedImage inputImage;
     int widthBefore;
     int heightBefore;
+
+
+
     @FXML
     private ImageView imageBefore;
 
     @FXML
     private ImageView imageAfter;
+
 
     @FXML
     private void selectImageButtonPressed() throws IOException {
@@ -101,6 +105,9 @@ public class PrimaryController {
 
     @FXML
     private void applyChangesButtonPressed() throws IOException {
+
+        zoomSlider.setValue(1);
+
         int Width = (int) ((mySlider.getValue() / 100) * widthBefore);
         int Height = (int) ((mySlider.getValue() / 100) * heightBefore);
         System.out.println(Width +  " " + Height);
@@ -195,8 +202,33 @@ public class PrimaryController {
 
     @FXML
     private Slider mySlider;
+    @FXML
+    Slider zoomSlider;
 
     public void initialize() {
+
+
+        zoomSlider.setOnMouseClicked(event -> {
+            int value = (int) zoomSlider.getValue();
+            zoom("temporary.png",value);
+
+            String fileName = "tmp.png"; // nazwa pliku
+            File imageFile = new File(fileName); // tworzenie obiektu klasy File
+
+
+            if (imageFile.isFile()) {
+                System.out.println("made image: " + imageFile.getAbsolutePath());
+
+
+                Image image = new Image(imageFile.toURI().toString());
+                imageAfter.setImage(image);
+                imageAfter.setFitHeight(image.getHeight());
+                imageAfter.setFitWidth(image.getWidth());
+                imageAfter.setPreserveRatio(true);
+            }
+
+        });
+
         mySlider.setLabelFormatter(new StringConverter<Double>() {
             @Override
             public String toString(Double n) {
@@ -243,7 +275,88 @@ public class PrimaryController {
         return extension;
     }
 
+//-----------------------------------------------------------------------ffffffffffffffff
+public static void zoom(String filePath, int multiplier) {
+    try {
+        // Wczytaj obraz z pliku
+        BufferedImage image = ImageIO.read(new File(filePath));
 
+        // Konwertuj obraz na tablicę pikseli
+        int[][] imageArray = convertTo2DArray(image);
+
+        // Przeskaluj obraz za pomocą funkcji resizeArray
+        int[][] resizedImage = resizeArray(imageArray, multiplier);
+
+        // Zapisz przekształcony obraz do tego samego pliku
+        saveImage(resizedImage, filePath);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+    public static int[][] resizeArray(int[][] tabl, int multiplier) {
+        int rows = tabl.length;
+        int columns = tabl[0].length;
+        int newRows = rows * multiplier;
+        int newColumns = columns * multiplier;
+        int[][] tabl2 = new int[newRows][newColumns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                int value = tabl[i][j];
+
+                for (int k = 0; k < multiplier; k++) {
+                    for (int l = 0; l < multiplier; l++) {
+                        tabl2[multiplier * i + k][multiplier * j + l] = value;
+                    }
+                }
+            }
+        }
+
+        return tabl2;
+    }
+
+    public static void saveImage(int[][] imageArray, String filePath) {
+        try {
+            int height = imageArray.length;
+            int width = imageArray[0].length;
+
+            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int pixelValue = imageArray[y][x];
+                    int rgb = (pixelValue << 16) | (pixelValue << 8) | pixelValue;
+                    image.setRGB(x, y, rgb);
+                }
+            }
+
+            File outputFile = new File("tmp.png");
+            ImageIO.write(image, "jpg", outputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int[][] convertTo2DArray(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int[][] imageArray = new int[height][width];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgb = image.getRGB(x, y);
+                int red = (rgb >> 16) & 0xFF;
+                int green = (rgb >> 8) & 0xFF;
+                int blue = rgb & 0xFF;
+                int gray = (red + green + blue) / 3;
+                imageArray[y][x] = gray;
+            }
+        }
+
+        return imageArray;
+    }
+    //---------------------------------------------------
 
 
 

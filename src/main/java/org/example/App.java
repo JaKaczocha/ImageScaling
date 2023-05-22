@@ -1,10 +1,12 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -16,6 +18,8 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
+
+
 
     private static Scene scene;
 
@@ -48,6 +52,10 @@ public class App extends Application {
         String fileName = "temporary.bnp"; // nazwa pliku
         File file = new File(fileName); // tworzenie obiektu klasy File
         boolean deleted = file.delete(); // usuwanie pliku i zapisanie wyniku w zmiennej deleted
+
+        String fileName1 = "tmp.png"; // nazwa pliku
+        File file1 = new File(fileName1); // tworzenie obiektu klasy File
+        boolean deleted1 = file1.delete(); // usuwanie pliku i zapisanie wyniku w zmiennej deleted
     }
 
 }
