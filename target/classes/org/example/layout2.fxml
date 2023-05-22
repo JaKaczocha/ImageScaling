@@ -4,8 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane prefHeight="480" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController"
-fitToWidth="true" fitToHeight="true">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="480" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
     <content>
       <VBox spacing="10">
           <children>
@@ -19,7 +18,7 @@ fitToWidth="true" fitToHeight="true">
                   <children>
                       <Button fx:id="selectImageButton" layoutX="71.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectImageButtonPressed" prefHeight="32.0" prefWidth="136.0" text="Wczytaj" />
                       <Button fx:id="applyChangesButton" layoutX="264.0" layoutY="280.0" mnemonicParsing="false" onAction="#applyChangesButtonPressed" prefHeight="32.0" prefWidth="70.0" text="----&gt;" />
-                      <Button fx:id="saveImageButton" layoutX="410.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="155.0" text="Zapisz" />
+                      <Button fx:id="saveImageButton" layoutX="410.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonSave" prefHeight="32.0" prefWidth="155.0" text="Zapisz" />
                   </children>
               </HBox>
               <VBox alignment="CENTER_LEFT" spacing="15">
@@ -34,10 +33,13 @@ fitToWidth="true" fitToHeight="true">
                       <RadioButton fx:id="bilinear" layoutX="275.0" layoutY="436.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="87.0" text="dwuliniowa" toggleGroup="$metody" />
                   </children>
               </VBox>
-              <VBox spacing="10" alignment="CENTER">
+              <VBox alignment="CENTER" prefHeight="138.0" prefWidth="431.0" spacing="10">
                   <children>
                       <Label layoutX="112.0" layoutY="337.0" prefHeight="27.0" prefWidth="70.0" text="Skalowanie:" />
                       <Slider fx:id="mySlider" layoutX="106.0" layoutY="364.0" majorTickUnit="50" max="500" maxWidth="400.0" min="50" minorTickCount="0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="slider" value="0" />
+
+                      <Label layoutX="112.0" layoutY="337.0" prefHeight="27.0" prefWidth="70.0" text="Zoom:" />
+                      <Slider fx:id="zoomSlider" layoutX="106.0" layoutY="364.0" majorTickUnit="1" max="10" maxWidth="400.0" min="1" minorTickCount="0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="slider" value="0" />
                   </children>
               </VBox>
           </children>
