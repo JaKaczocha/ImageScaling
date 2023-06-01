@@ -1,12 +1,15 @@
 package org.example;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.*;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -20,6 +23,9 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.util.StringConverter;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 
 import java.io.File;
 
@@ -29,21 +35,21 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.image.BufferedImage;
 
 public class PrimaryController {
-
+    public static final String PL = "Polski";
+    public static final String EN = "English";
+    public static final String DE = "Deutsch";
     File selectedFile;
     ImageView imageV;
     BufferedImage outputImage;
     BufferedImage inputImage;
     int widthBefore;
     int heightBefore;
-
-
-
     @FXML
     private ImageView imageBefore;
-
     @FXML
     private ImageView imageAfter;
+    @FXML
+    private VBox root;
 
 
     @FXML
@@ -61,6 +67,9 @@ public class PrimaryController {
         // Wybierz plik obrazka
         File selectedFileTmp = fileChooser.showOpenDialog(null);
         if (selectedFileTmp != null) {
+
+            // TODO: 01.06.2023 w tym miejscu trzeba zrestartować rozmiary okienek "przed" i "po"
+
             selectedFile = selectedFileTmp;
             // Wczytaj plik obrazka i wyświetl go w ImageView
             Image image = new Image(selectedFile.toURI().toString());
@@ -207,6 +216,7 @@ public class PrimaryController {
 
     public void initialize() {
 
+        initMenu();
 
         zoomSlider.setOnMouseClicked(event -> {
             int value = (int) zoomSlider.getValue();
@@ -358,11 +368,6 @@ public static void zoom(String filePath, int multiplier) {
     }
     //---------------------------------------------------
 
-
-
-
-
-
     private String getFileExtension(String filename) {
         String extension = "";
         int dotIndex = filename.lastIndexOf('.');
@@ -372,54 +377,30 @@ public static void zoom(String filePath, int multiplier) {
         return extension;
     }
 
-//to zostalo z poprzedniego kodu:
-//    @FXML
-//    private void saveImage() throws IOException {
-//        // Get the path to the project directory
-//        String userDir = System.getProperty("user.dir");
-//        File projectDir = new File(userDir);
-//
-//// Create a file selection dialog
-//        FileChooser fileChooser = new FileChooser();
-//        fileChooser.setTitle("Zapisz jako...");
-//        fileChooser.setInitialDirectory(projectDir);
-//
-//// Add file filter for * format
-//        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Plik PNG (*.png)", "*.png");
-//        fileChooser.getExtensionFilters().add(extFilter);
-//        extFilter = new FileChooser.ExtensionFilter("Plik JPG (*.jpg)", "*.jpg");
-//        fileChooser.getExtensionFilters().add(extFilter);
-//        extFilter = new FileChooser.ExtensionFilter("Plik JPEG (*.jpeg)", "*.jpeg");
-//        fileChooser.getExtensionFilters().add(extFilter);
-//        extFilter = new FileChooser.ExtensionFilter("Plik BMP (*.bmp)", "*.bmp");
-//        fileChooser.getExtensionFilters().add(extFilter);
-//// Display a dialog and download the selected file
-//        File file = fileChooser.showSaveDialog(null);
-//
-//        if (file != null) {
-//            try {
-//                // Convert BufferedImage to Image and save to file
-//                ImageIO.write(outputImage, "png", file);
-//
-//                // Display success notification
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                alert.setTitle("Zapisano obrazek");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Obrazek został zapisany w pliku: " + file.getAbsolutePath());
-//                alert.showAndWait();
-//            } catch (IOException ex) {
-//                // Display error notification
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Błąd zapisu");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Wystąpił błąd podczas zapisywania obrazka: " + ex.getMessage());
-//                alert.showAndWait();
-//            }
-//        }
-//    }
+    private void initMenu() {
+        MenuBar menuBar = (MenuBar) root.getChildren().get(0);
+        Menu settingsMenu = menuBar.getMenus().get(0);
+        Menu languagesMenu = (Menu) settingsMenu.getItems().get(0);
+        for (javafx.scene.control.MenuItem languageItem : languagesMenu.getItems()) {
+            languageItem.setOnAction(this::handleLanguageSelection);
+        }
+    }
 
-
-
+    private void handleLanguageSelection(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String selectedLang = menuItem.getText();
+        switch (selectedLang) {
+            case PL:
+                System.out.println("Wybrano język polski");
+                break;
+            case EN:
+                System.out.println("Wybrano język angielski");
+                break;
+            case DE:
+                System.out.println("Wybrano język niemiecki");
+                break;
+        }
+    }
 
 
 }
