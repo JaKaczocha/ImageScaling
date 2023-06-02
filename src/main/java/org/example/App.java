@@ -7,12 +7,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+
+
+import javafx.scene.image.Image;
+
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * JavaFX App
@@ -21,13 +26,16 @@ public class App extends Application {
 
 
 
+
+
+
     private static Scene scene;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-
         scene = new Scene(loadFXML("layout2"));
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Interpolacja Obrazu");
         primaryStage.show();
     }
 
