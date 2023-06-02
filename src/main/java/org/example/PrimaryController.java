@@ -26,6 +26,7 @@ import javafx.util.StringConverter;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import org.w3c.dom.Text;
 
 import java.io.File;
 
@@ -35,6 +36,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.image.BufferedImage;
 
 public class PrimaryController {
+
+
+
     public static final String PL = "Polski";
     public static final String EN = "English";
     public static final String DE = "Deutsch";
@@ -51,6 +55,11 @@ public class PrimaryController {
     @FXML
     private VBox root;
 
+
+
+    @FXML
+    private TextArea inputSize;
+    @FXML TextArea outputSize;
 
     @FXML
     private void selectImageButtonPressed() throws IOException {
@@ -69,6 +78,8 @@ public class PrimaryController {
         if (selectedFileTmp != null) {
 
             // TODO: 01.06.2023 w tym miejscu trzeba zrestartować rozmiary okienek "przed" i "po"
+            imageAfter.setFitHeight(0);
+            imageAfter.setFitWidth(0);
 
             selectedFile = selectedFileTmp;
             // Wczytaj plik obrazka i wyświetl go w ImageView
@@ -83,7 +94,10 @@ public class PrimaryController {
             inputImage = ImageIO.read(selectedFile);
             outputImage = null;
             imageAfter.setImage(null);
+
         }
+
+
     }
 
 
@@ -115,7 +129,7 @@ public class PrimaryController {
     @FXML
     private void applyChangesButtonPressed() throws IOException {
 
-        zoomSlider.setValue(1);
+
 
         int Width = (int) ((mySlider.getValue() / 100) * widthBefore);
         int Height = (int) ((mySlider.getValue() / 100) * heightBefore);
@@ -161,6 +175,26 @@ public class PrimaryController {
             imageAfter.setFitWidth(image.getWidth());
             imageAfter.setPreserveRatio(true);
         }
+
+
+        int value = (int) zoomSlider.getValue();
+        zoom("temporary.png",value);
+
+        String fileName2 = "tmp.png"; // nazwa pliku
+        File imageFile2 = new File(fileName2); // tworzenie obiektu klasy File
+
+
+        if (imageFile2.isFile()) {
+            System.out.println("made image: " + imageFile2.getAbsolutePath());
+
+
+            Image image = new Image(imageFile2.toURI().toString());
+            imageAfter.setImage(image);
+            imageAfter.setFitHeight(image.getHeight());
+            imageAfter.setFitWidth(image.getWidth());
+            imageAfter.setPreserveRatio(true);
+        }
+
     }
 
     public void nearestNeighbor(File inputFile, int newWidth, int newHeight) throws IOException {
@@ -216,33 +250,25 @@ public class PrimaryController {
 
     public void initialize() {
 
-        initMenu();
+        //initMenu();
 
-        zoomSlider.setOnMouseClicked(event -> {
-            int value = (int) zoomSlider.getValue();
-            zoom("temporary.png",value);
-
-            String fileName = "tmp.png"; // nazwa pliku
-            File imageFile = new File(fileName); // tworzenie obiektu klasy File
-
-
-            if (imageFile.isFile()) {
-                System.out.println("made image: " + imageFile.getAbsolutePath());
-
-
-                Image image = new Image(imageFile.toURI().toString());
-                imageAfter.setImage(image);
-                imageAfter.setFitHeight(image.getHeight());
-                imageAfter.setFitWidth(image.getWidth());
-                imageAfter.setPreserveRatio(true);
-            }
-
-        });
 
         mySlider.setLabelFormatter(new StringConverter<Double>() {
             @Override
             public String toString(Double n) {
                 return String.format("%.0f%%", n);
+            }
+
+            @Override
+            public Double fromString(String s) {
+                return null;
+            }
+        });
+
+        zoomSlider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double n) {
+                return String.format("%.0fx", n);
             }
 
             @Override
@@ -286,44 +312,46 @@ public class PrimaryController {
     }
 
 //-----------------------------------------------------------------------ffffffffffffffff
-public static void zoom(String filePath, int multiplier) {
+public  void zoom(String filePath, int multiplier) {
     try {
         // Wczytaj obraz z pliku
         BufferedImage image = ImageIO.read(new File(filePath));
 
-        // Konwertuj obraz na tablicę pikseli
-        int[][] imageArray = convertTo2DArray(image);
 
+        //BufferedImage imageinput = ImageIO.read(selectedFile);
+        //inputImage = resizeImage(imageinput,multiplier);
         // Przeskaluj obraz za pomocą funkcji resizeArray
-        int[][] resizedImage = resizeArray(imageArray, multiplier);
+        outputImage = resizeImage(image, multiplier);
 
         // Zapisz przekształcony obraz do tego samego pliku
-        saveImage(resizedImage, filePath);
+        ImageIO.write(outputImage, "png", new File("tmp.png"));
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
 
-    public static int[][] resizeArray(int[][] tabl, int multiplier) {
-        int rows = tabl.length;
-        int columns = tabl[0].length;
-        int newRows = rows * multiplier;
-        int newColumns = columns * multiplier;
-        int[][] tabl2 = new int[newRows][newColumns];
+    public static BufferedImage resizeImage(BufferedImage image, int multiplier) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int newWidth = width * multiplier;
+        int newHeight = height * multiplier;
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                int value = tabl[i][j];
+        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_BYTE_GRAY);
 
-                for (int k = 0; k < multiplier; k++) {
-                    for (int l = 0; l < multiplier; l++) {
-                        tabl2[multiplier * i + k][multiplier * j + l] = value;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixel = image.getRGB(x, y);
+
+                // Skopiuj piksel do powiększonego obrazu wielokrotnie
+                for (int i = 0; i < multiplier; i++) {
+                    for (int j = 0; j < multiplier; j++) {
+                        resizedImage.setRGB(x * multiplier + i, y * multiplier + j, pixel);
                     }
                 }
             }
         }
 
-        return tabl2;
+        return resizedImage;
     }
 
     public static void saveImage(int[][] imageArray, String filePath) {
@@ -342,7 +370,7 @@ public static void zoom(String filePath, int multiplier) {
             }
 
             File outputFile = new File("tmp.png");
-            ImageIO.write(image, "jpg", outputFile);
+            ImageIO.write(image, "png", outputFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -376,7 +404,7 @@ public static void zoom(String filePath, int multiplier) {
         }
         return extension;
     }
-
+/*
     private void initMenu() {
         MenuBar menuBar = (MenuBar) root.getChildren().get(0);
         Menu settingsMenu = menuBar.getMenus().get(0);
@@ -402,5 +430,5 @@ public static void zoom(String filePath, int multiplier) {
         }
     }
 
-
+*/
 }
