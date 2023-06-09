@@ -1,28 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
-   <children>
-      <Pane>
-         <children>
-              <Button fx:id="selectImageButton" layoutX="71.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectImageButtonPressed" prefHeight="32.0" prefWidth="136.0" text="Wczytaj" />
-              <Button fx:id="applyChangesButton" onAction="#applyChangesButtonPressed" layoutX="271.0" layoutY="156.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="70.0" text="----&gt;" />
-              <Button fx:id="saveImageButton" layoutX="410.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="155.0" text="Zapisz" />
-              <ImageView fx:id="imageBefore" fitHeight="250.0" fitWidth="250.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-              <ImageView fx:id="imageAfter" fitHeight="250.0" fitWidth="250.0" layoutX="362.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-              <Label layoutX="38.0" layoutY="323.0" prefHeight="27.0" prefWidth="214.0" text="Wybierz metodę:" />
-              <Label layoutX="258.0" layoutY="323.0" prefHeight="27.0" prefWidth="167.0" text="Skalowanie:" />
-              <RadioButton fx:id="nearestNeighbor" layoutX="38.0" layoutY="353.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="233.0" selected="true" text="najbliższego sąsiada">
-                  <toggleGroup>
-                      <ToggleGroup fx:id="metody" />
-                  </toggleGroup>
-              </RadioButton>
-              <RadioButton fx:id="bicubic" layoutX="38.0" layoutY="373.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="233.0" text="dwukubiczna" toggleGroup="$metody" />
-              <RadioButton fx:id="bilinear" layoutX="38.0" layoutY="393.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="233.0" text="dwuliniowa" toggleGroup="$metody" />
-         </children>
-      </Pane>
-   </children>
-</StackPane>
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+    <content>
+        <fx:define>
+            <Image fx:id="appIcon" url="@ki.jpg" />
+        </fx:define>
+        <VBox spacing="0">
+            <children>
+                <MenuBar fx:id="menuBar">
+                    <menus>
+                        <Menu text="Ustawienia">
+                            <items>
+                                <Menu text="Języki">
+                                    <items>
+                                        <MenuItem text="Polski" />
+                                        <MenuItem text="English" />
+                                        <MenuItem text="Deutsch" />
+                                    </items>
+                                </Menu>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <HBox alignment="CENTER" spacing="10" style="-fx-background-color: lightgray;" VBox.vgrow="ALWAYS">
+                    <children>
+                        <ImageView fx:id="imageBefore" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imageAfter" pickOnBounds="true" preserveRatio="true" />
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </HBox>
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Button fx:id="selectImageButton" layoutX="71.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#selectImageButtonPressed" prefHeight="32.0" prefWidth="136.0" styleClass="button" text="Wczytaj" />
+
+                        <Button fx:id="saveImageButton" layoutX="410.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonSave" prefHeight="32.0" prefWidth="155.0" styleClass="button" text="Zapisz" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <VBox alignment="CENTER" spacing="5.0">
+                    <children>
+                        <Label layoutX="112.0" layoutY="409.0" prefHeight="27.0" prefWidth="95.0" styleClass="label" text="Wybierz metodę:" />
+                        <VBox maxWidth="150.0">
+                            <children>
+                                <RadioButton fx:id="nearestNeighbor" mnemonicParsing="false" prefHeight="20.0" prefWidth="136.0" selected="true" styleClass="radio-button" text="najbliższego sąsiada">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="metody" />
+                                    </toggleGroup>
+                                </RadioButton>
+                                <RadioButton fx:id="bicubic" mnemonicParsing="false" prefHeight="20.0" prefWidth="95.0" styleClass="radio-button" text="dwukubiczna" toggleGroup="$metody" />
+                                <RadioButton fx:id="bilinear" mnemonicParsing="false" prefHeight="20.0" prefWidth="87.0" styleClass="radio-button" text="dwuliniowa" toggleGroup="$metody" />
+                            </children>
+                        </VBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </VBox.margin>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="138.0" prefWidth="431.0" spacing="10">
+                    <children>
+                        <Label alignment="CENTER" layoutX="112.0" layoutY="337.0" prefHeight="27.0" prefWidth="70.0" styleClass="label" text="Interpolacja:" />
+                        <Slider fx:id="mySlider" majorTickUnit="50" max="500" maxWidth="600.0" min="50" minorTickCount="0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" snapToTicks="false" styleClass="slider" value="0">
+                            <VBox.margin>
+                                <Insets left="20.0" right="20.0" />
+                            </VBox.margin>
+                        </Slider>
+                        <HBox alignment="CENTER" spacing="10">
+                            <children>
+
+                                <Label fx:id="zoomInputLabel" layoutX="600.0" layoutY="337.0" maxWidth="600.0"  styleClass="label" text="Przybliżenie wejścia:" />
+                                <Region prefWidth="230.0" />
+                                <Label fx:id="zoomOutputLabel" layoutX="600.0" layoutY="337.0" maxWidth="600.0" prefHeight="27.0" styleClass="label" text="Przybliżenie wyjścia:" />
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" spacing="10">
+                            <children>
+                                <Slider fx:id="zoomInputSlider" layoutX="106.0" layoutY="364.0" majorTickUnit="1" max="15" maxWidth="600.0" min="1" minorTickCount="0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="false" styleClass="slider" value="0" />
+                                <Slider fx:id="zoomSlider" layoutX="106.0" layoutY="364.0" majorTickUnit="1" max="15" maxWidth="600.0" min="1" minorTickCount="0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="false" styleClass="slider" value="0" />
+                                </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </content>
+</ScrollPane>
