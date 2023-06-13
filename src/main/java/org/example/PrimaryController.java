@@ -34,6 +34,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.image.BufferedImage;
+import java.net.URLDecoder;
+import java.util.Objects;
 
 public class PrimaryController {
 
@@ -68,11 +70,6 @@ public class PrimaryController {
     private void selectImageButtonPressed() throws IOException {
         // Utwórz okno wyboru pliku
         FileChooser fileChooser = new FileChooser();
-
-        // Ustaw domyślny katalog na katalog projektu
-        File initialDirectory = new File(System.getProperty("user.dir") + "/image");
-        fileChooser.setInitialDirectory(initialDirectory);
-
         fileChooser.setTitle("Wybierz plik obrazka");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Obrazki", "*.jpg", "*.jpeg", "*.png", "*.bmp"));
 
@@ -80,7 +77,6 @@ public class PrimaryController {
         File selectedFileTmp = fileChooser.showOpenDialog(null);
         if (selectedFileTmp != null) {
 
-            // TODO: 01.06.2023 w tym miejscu trzeba zrestartować rozmiary okienek "przed" i "po"
             imageAfter.setFitHeight(0);
             imageAfter.setFitWidth(0);
 
@@ -559,6 +555,10 @@ public class PrimaryController {
             extension = filename.substring(dotIndex + 1);
         }
         return extension;
+    }
+
+    private void debug(String info) {
+        root.getChildren().add(new javafx.scene.control.Label(info));
     }
 /*
     private void initMenu() {
