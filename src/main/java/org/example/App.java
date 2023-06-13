@@ -24,11 +24,6 @@ import java.util.Objects;
  */
 public class App extends Application {
 
-
-
-
-
-
     private static Scene scene;
 
     @Override
