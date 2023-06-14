@@ -155,6 +155,9 @@ public class PrimaryController {
 
         int Width = (int) ((mySlider.getValue() / 100) * widthBefore);
         int Height = (int) ((mySlider.getValue() / 100) * heightBefore);
+
+        orginalOutputImageSize.setText("( " + Width + "," + Height + " )");
+
         System.out.println(Width + " " + Height);
         if (nearestNeighbor.isSelected()) {
             method = 1;
