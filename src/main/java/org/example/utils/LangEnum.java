@@ -1,6 +1,7 @@
 package org.example.utils;
 
 public enum LangEnum {
+    APP_TITLE,
     SETTINGS,
     LANGUAGES,
     LOAD,

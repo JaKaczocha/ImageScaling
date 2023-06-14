@@ -51,3 +51,8 @@
     -fx-max-width: 500pt; /* Ustawienie maksymalnej szerokości na równą minimalnej */
     -fx-max-height: 16pt; /* Ustawienie maksymalnej wysokości na równą minimalnej */
 }
+
+#appTitle {
+  -fx-font-size: 10pt; /* Zmiana rozmiaru czcionki */
+  -fx-font-weight: bold;
+}

@@ -32,6 +32,8 @@ public class PrimaryController {
     @FXML
     private Button saveImageButton;
     @FXML
+    private javafx.scene.control.Label appTitle;
+    @FXML
     private javafx.scene.control.Label selectMethod;
     @FXML
     private javafx.scene.control.Label interpolation;
@@ -262,6 +264,7 @@ public class PrimaryController {
         // przekaż potrzebne parametry do Lang Utility
         langUtility = new Lang(settingsMenu,
                 languageMenu,
+                appTitle,
                 selectImageButton,
                 saveImageButton,
                 selectMethod,

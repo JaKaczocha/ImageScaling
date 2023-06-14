@@ -10,8 +10,10 @@ public class Lang {
     private final static Map<LangChoice, Map<LangEnum, String>> langMap;
     private final static Map<LangEnum, String> engMap;
     private final static Map<LangEnum, String> plMap;
+
     static {
         engMap = new HashMap<>();
+        engMap.put(LangEnum.APP_TITLE, "Image Interpolation");
         engMap.put(LangEnum.SETTINGS, "Settings");
         engMap.put(LangEnum.LANGUAGES, "Languages");
         engMap.put(LangEnum.LOAD, "Load");
@@ -25,6 +27,7 @@ public class Lang {
         engMap.put(LangEnum.OUTPUT_ZOOM, "Output zoom:");
 
         plMap = new HashMap<>();
+        plMap.put(LangEnum.APP_TITLE, "Interpolacja Obrazów");
         plMap.put(LangEnum.SETTINGS, "Ustawienia");
         plMap.put(LangEnum.LANGUAGES, "Języki");
         plMap.put(LangEnum.LOAD, "Wczytaj");
@@ -42,8 +45,11 @@ public class Lang {
         langMap.put(LangChoice.PL, plMap);
     }
 
+
+    // złap referencje do elementów z textem do zmiany (które będą przekazane przy inicializacji instancji)
     private Menu settingsMenu;
     private Menu languageMenu;
+    private Label appTitle;
     private Button load;
     private Button save;
     private Label chooseMethod;
@@ -57,6 +63,7 @@ public class Lang {
     public Lang() {}
     public Lang(Menu settingsMenu,
                 Menu languageMenu,
+                Label appTitle,
                 Button load,
                 Button save,
                 Label chooseMethod,
@@ -69,6 +76,7 @@ public class Lang {
 
         this.settingsMenu = settingsMenu;
         this.languageMenu = languageMenu;
+        this.appTitle = appTitle;
         this.load = load;
         this.save = save;
         this.chooseMethod = chooseMethod;
@@ -85,6 +93,7 @@ public class Lang {
 
         settingsMenu.setText(selectedLangMap.get(LangEnum.SETTINGS));
         languageMenu.setText(selectedLangMap.get(LangEnum.LANGUAGES));
+        appTitle.setText(selectedLangMap.get(LangEnum.APP_TITLE));
         load.setText(selectedLangMap.get(LangEnum.LOAD));
         save.setText(selectedLangMap.get(LangEnum.SAVE));
         chooseMethod.setText(selectedLangMap.get(LangEnum.CHOOSE_METHOD));
