@@ -1,54 +1,59 @@
 package org.example;
 
-import java.awt.*;
-import java.awt.Label;
-import java.awt.TextArea;
-import java.awt.event.ActionListener;
-import java.io.*;
-
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.event.ActionEvent;
-import javafx.stage.Stage;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
-import org.w3c.dom.Text;
-
-import java.io.File;
+import org.example.utils.Lang;
+import org.example.utils.LangChoice;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.Label;
+import java.awt.TextArea;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.net.URLDecoder;
-import java.util.Objects;
+import java.io.File;
+import java.io.IOException;
 
 public class PrimaryController {
 
 
 
+    @FXML
+    private Button selectImageButton;
+    @FXML
+    private Button saveImageButton;
+    @FXML
+    private javafx.scene.control.Label selectMethod;
+    @FXML
+    private javafx.scene.control.Label interpolation;
+    @FXML
+    private javafx.scene.control.Label zoomInputLabel;
+    @FXML
+    private javafx.scene.control.Label zoomOutputLabel;
+    @FXML
+    private Slider zoomInputSlider;
+    @FXML
+    private Slider mySlider;
+    @FXML
+    Slider zoomSlider;
+
+    private Menu settingsMenu;
+    private Menu languageMenu;
+
     public static final String PL = "Polski";
     public static final String EN = "English";
-    public static final String DE = "Deutsch";
     File selectedFile;
     ImageView imageV;
     BufferedImage outputImage;
-
-
 
     BufferedImage inputImage;
     int widthBefore;
@@ -64,7 +69,9 @@ public class PrimaryController {
 
     @FXML
     private TextArea inputSize;
-    @FXML TextArea outputSize;
+    @FXML
+    private TextArea outputSize;
+    private Lang langUtility;
 
     @FXML
     private void selectImageButtonPressed() throws IOException {
@@ -120,17 +127,14 @@ public class PrimaryController {
     private RadioButton bilinear, bicubic, nearestNeighbor;
 
     int metoda = 1; //3 - dwuliniowa, 2 - dwukubiczna, 1 - najbliższego sąsiada
+
     public void getMethod(ActionEvent event) { // wybieranie metody (chyba nie działa, trzeba poprawic, ale nie sprawdzalem)
 
-        if (bilinear.isSelected()){
+        if (bilinear.isSelected()) {
             metoda = 3;
-        }
-
-        else if(bicubic.isSelected()){
+        } else if (bicubic.isSelected()) {
             metoda = 2;
-        }
-
-        else if(nearestNeighbor.isSelected()){
+        } else if (nearestNeighbor.isSelected()) {
             metoda = 1;
         }
 
@@ -141,33 +145,25 @@ public class PrimaryController {
     private void applyChangesButtonPressed() throws IOException {
 
 
-
         int Width = (int) ((mySlider.getValue() / 100) * widthBefore);
         int Height = (int) ((mySlider.getValue() / 100) * heightBefore);
-        System.out.println(Width +  " " + Height);
-        if(nearestNeighbor.isSelected()) {
+        System.out.println(Width + " " + Height);
+        if (nearestNeighbor.isSelected()) {
             method = 1;
-        }
-        else if(bilinear.isSelected()) {
+        } else if (bilinear.isSelected()) {
             method = 2;
-        }
-        else if(bicubic.isSelected()) {
+        } else if (bicubic.isSelected()) {
             method = 3;
         }
 
 
-
-        if(method == 1) {
-            nearestNeighbor(selectedFile,Width,Height);
-        }
-        else if( method == 2) {
-            bilinear(selectedFile,Width,Height);
-        }
-        else if( method == 3) {
+        if (method == 1) {
+            nearestNeighbor(selectedFile, Width, Height);
+        } else if (method == 2) {
+            bilinear(selectedFile, Width, Height);
+        } else if (method == 3) {
             bicubic(selectedFile, Width, Height);
-        }
-
-        else {
+        } else {
             return;
         }
 
@@ -189,7 +185,7 @@ public class PrimaryController {
 
 
         int value = (int) zoomSlider.getValue();
-        zoom("temporary.png",value);
+        zoom("temporary.png", value);
 
         String fileName2 = "tmp.png"; // nazwa pliku
         File imageFile2 = new File(fileName2); // tworzenie obiektu klasy File
@@ -223,6 +219,7 @@ public class PrimaryController {
         // save the new image to a file or use it as needed
         ImageIO.write(outputImage, "jpg", new File("output.jpg"));
     }
+
     public void bilinear(File inputFile, int newWidth, int newHeight) throws IOException {
         inputImage = ImageIO.read(inputFile);
 
@@ -238,6 +235,7 @@ public class PrimaryController {
         // save the new image to a file or use it as needed
         ImageIO.write(outputImage, "jpg", new File("output.jpg"));
     }
+
     public void bicubic(File inputFile, int newWidth, int newHeight) throws IOException {
         inputImage = ImageIO.read(inputFile);
 
@@ -254,22 +252,28 @@ public class PrimaryController {
         ImageIO.write(outputImage, "jpg", new File("output.jpg"));
     }
 
-    @FXML
-    private Slider zoomInputSlider;
-    @FXML
-    private Slider mySlider;
-    @FXML
-    Slider zoomSlider;
-
-
     public double lastValue = 0.0;
     double lastValue2 = 0.0;
     double lastValue3 = 0.0;
+
     public void initialize() {
+        // stwórz menu
+        initMenu();
+        // przekaż potrzebne parametry do Lang Utility
+        langUtility = new Lang(settingsMenu,
+                languageMenu,
+                selectImageButton,
+                saveImageButton,
+                selectMethod,
+                nearestNeighbor,
+                bicubic,
+                bilinear,
+                interpolation,
+                zoomInputLabel,
+                zoomOutputLabel);
 
-        //initMenu();
+
         mySlider.setValue(100.0);
-
         mySlider.setLabelFormatter(new StringConverter<Double>() {
             @Override
             public String toString(Double n) {
@@ -314,7 +318,7 @@ public class PrimaryController {
             //System.out.println("Nowa wartość suwaka zoomInputSlider: " + value +" " +  roundedValue);
 
             //System.out.println(lastValue + " - " + roundedValue + " = " + (lastValue - roundedValue));
-            if(Math.abs(Math.round(lastValue - roundedValue)) > 0.5) {
+            if (Math.abs(Math.round(lastValue - roundedValue)) > 0.5) {
                 if (selected) {
 
 
@@ -339,17 +343,17 @@ public class PrimaryController {
         });
 
 
-            zoomInputSlider.setOnMouseReleased(event -> {
-                double snappedValue = Math.floor(zoomInputSlider.getValue());
+        zoomInputSlider.setOnMouseReleased(event -> {
+            double snappedValue = Math.floor(zoomInputSlider.getValue());
 
-                    zoomInputSlider.setValue(snappedValue);
+            zoomInputSlider.setValue(snappedValue);
 
-                // Wykonaj odpowiednie czynności po upuszczeniu suwaka na najbliższą mniejszą wartość
-                //System.out.println("Zaokrąglona wartość suwaka zoomInputSlider: " + snappedValue);
-            });
+            // Wykonaj odpowiednie czynności po upuszczeniu suwaka na najbliższą mniejszą wartość
+            //System.out.println("Zaokrąglona wartość suwaka zoomInputSlider: " + snappedValue);
+        });
 
 
-            //000000000000
+        //000000000000
 
         zoomSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             // Kod do wykonania po zmianie wartości suwaka
@@ -359,7 +363,7 @@ public class PrimaryController {
             //System.out.println("Nowa wartość suwaka zoomInputSlider: " + value +" " +  roundedValue);
 
             //System.out.println(lastValue2 + " - " + roundedValue + " = " + (lastValue2 - roundedValue));
-            if(Math.abs(Math.round(lastValue2 - roundedValue)) > 0.5) {
+            if (Math.abs(Math.round(lastValue2 - roundedValue)) > 0.5) {
                 if (selected) {
                     try {
                         applyChangesButtonPressed();
@@ -390,7 +394,7 @@ public class PrimaryController {
             //System.out.println("Nowa wartość suwaka zoomInputSlider: " + value +" " +  roundedValue);
 
             System.out.println(lastValue3 + " - " + roundedValue + " = " + (lastValue3 - roundedValue));
-            if(Math.abs(Math.round(lastValue3 - roundedValue)) > 0.5) {
+            if (Math.abs(Math.round(lastValue3 - roundedValue)) > 0.5) {
                 if (selected) {
                     try {
                         applyChangesButtonPressed();
@@ -412,8 +416,6 @@ public class PrimaryController {
         });
 
 
-
-
         //222222
         ToggleGroup metodyToggleGroup = new ToggleGroup();
 
@@ -423,7 +425,7 @@ public class PrimaryController {
 
         metodyToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
 
-            if(selected) {
+            if (selected) {
                 try {
                     applyChangesButtonPressed();
                 } catch (IOException e) {
@@ -437,11 +439,11 @@ public class PrimaryController {
 
 
     public void buttonSave() {
-        if(outputImage == null) {
+        if (outputImage == null) {
             return;
         }
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Obrazy", "*.jpg", "*.jpeg", "*.png", "*.gif","*.bmp");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Obrazy", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp");
         fileChooser.getExtensionFilters().add(filter);
 
         // Sprawdź istnienie folderu
@@ -475,7 +477,7 @@ public class PrimaryController {
     }
 
     //-----------------------------------------------------------------------ffffffffffffffff
-    public  void zoom(String filePath, int multiplier) {
+    public void zoom(String filePath, int multiplier) {
         try {
             // Wczytaj obraz z pliku
             BufferedImage image = ImageIO.read(new File(filePath));
@@ -492,7 +494,6 @@ public class PrimaryController {
             e.printStackTrace();
         }
     }
-
 
 
     public static BufferedImage resizeImage(BufferedImage image, int multiplier) {
@@ -573,12 +574,16 @@ public class PrimaryController {
     private void debug(String info) {
         root.getChildren().add(new javafx.scene.control.Label(info));
     }
-/*
+
     private void initMenu() {
         MenuBar menuBar = (MenuBar) root.getChildren().get(0);
         Menu settingsMenu = menuBar.getMenus().get(0);
-        Menu languagesMenu = (Menu) settingsMenu.getItems().get(0);
-        for (javafx.scene.control.MenuItem languageItem : languagesMenu.getItems()) {
+        Menu languageMenu = (Menu) settingsMenu.getItems().get(0);
+        // potrzebne do konstruktora LangUtils który będzie modyfikował text
+        this.languageMenu = languageMenu;
+        this.settingsMenu = settingsMenu;
+
+        for (javafx.scene.control.MenuItem languageItem : languageMenu.getItems()) {
             languageItem.setOnAction(this::handleLanguageSelection);
         }
     }
@@ -589,15 +594,14 @@ public class PrimaryController {
         switch (selectedLang) {
             case PL:
                 System.out.println("Wybrano język polski");
+                langUtility.setLanguage(LangChoice.PL);
                 break;
             case EN:
                 System.out.println("Wybrano język angielski");
-                break;
-            case DE:
-                System.out.println("Wybrano język niemiecki");
+                langUtility.setLanguage(LangChoice.ENG);
                 break;
         }
     }
 
-*/
+
 }

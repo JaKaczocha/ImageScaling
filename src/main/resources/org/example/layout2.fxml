@@ -14,7 +14,7 @@
         <fx:define>
             <Image fx:id="appIcon" url="@ki.jpg" />
         </fx:define>
-        <VBox spacing="0">
+        <VBox spacing="0" fx:id="root">
             <children>
                 <MenuBar fx:id="menuBar">
                     <menus>
@@ -24,7 +24,6 @@
                                     <items>
                                         <MenuItem text="Polski" />
                                         <MenuItem text="English" />
-                                        <MenuItem text="Deutsch" />
                                     </items>
                                 </Menu>
                             </items>
@@ -52,7 +51,7 @@
                 </HBox>
                 <VBox alignment="CENTER" spacing="5.0">
                     <children>
-                        <Label layoutX="112.0" layoutY="409.0" prefHeight="27.0" prefWidth="95.0" styleClass="label" text="Wybierz metodę:" />
+                        <Label fx:id="selectMethod" layoutX="112.0" layoutY="409.0" prefHeight="27.0" prefWidth="95.0" styleClass="label" text="Wybierz metodę:" />
                         <VBox maxWidth="150.0">
                             <children>
                                 <RadioButton fx:id="nearestNeighbor" mnemonicParsing="false" prefHeight="20.0" prefWidth="136.0" selected="true" styleClass="radio-button" text="najbliższego sąsiada">
@@ -71,7 +70,7 @@
                 </VBox>
                 <VBox alignment="CENTER" prefHeight="138.0" prefWidth="431.0" spacing="10">
                     <children>
-                        <Label alignment="CENTER" layoutX="112.0" layoutY="337.0" prefHeight="27.0" prefWidth="70.0" styleClass="label" text="Interpolacja:" />
+                        <Label fx:id="interpolation" alignment="CENTER" layoutX="112.0" layoutY="337.0" prefHeight="27.0" prefWidth="70.0" styleClass="label" text="Interpolacja:" />
                         <Slider fx:id="mySlider" majorTickUnit="50" max="500" maxWidth="600.0" min="50" minorTickCount="0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" snapToTicks="false" styleClass="slider" value="0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
