@@ -1,4 +1,8 @@
+org\example\PrimaryController$1.class
 module-info.class
+org\example\Main.class
 org\example\SecondaryController.class
 org\example\App.class
 org\example\PrimaryController.class
+org\example\ImageViewer.class
+org\example\PrimaryController$2.class
