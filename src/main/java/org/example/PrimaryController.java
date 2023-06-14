@@ -70,6 +70,16 @@ public class PrimaryController {
     private void selectImageButtonPressed() throws IOException {
         // Utwórz okno wyboru pliku
         FileChooser fileChooser = new FileChooser();
+
+        // Sprawdź istnienie folderu
+        String imageFolderPath = System.getProperty("user.dir") + "/image";
+        File imageFolder = new File(imageFolderPath);
+        if (!imageFolder.exists() || !imageFolder.isDirectory()) {
+            // Folder nie istnieje lub nie jest katalogiem, nie ustawiaj domyślnego folderu
+            imageFolder = null;
+        }
+
+        fileChooser.setInitialDirectory(imageFolder);
         fileChooser.setTitle("Wybierz plik obrazka");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Obrazki", "*.jpg", "*.jpeg", "*.png", "*.bmp"));
 
@@ -98,10 +108,7 @@ public class PrimaryController {
             mySlider.setValue(100.0);
             zoomSlider.setValue(0.0);
             zoomInputSlider.setValue(0.0);
-
         }
-
-
     }
 
 
@@ -437,8 +444,14 @@ public class PrimaryController {
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Obrazy", "*.jpg", "*.jpeg", "*.png", "*.gif","*.bmp");
         fileChooser.getExtensionFilters().add(filter);
 
-        File initialDirectory = new File(System.getProperty("user.dir") + "/image");
-        fileChooser.setInitialDirectory(initialDirectory);
+        // Sprawdź istnienie folderu
+        String imageFolderPath = System.getProperty("user.dir") + "/image";
+        File imageFolder = new File(imageFolderPath);
+        if (!imageFolder.exists() || !imageFolder.isDirectory()) {
+            // Folder nie istnieje lub nie jest katalogiem, nie ustawiaj domyślnego folderu
+            imageFolder = null;
+        }
+        fileChooser.setInitialDirectory(imageFolder);
 
         File selectedFile = fileChooser.showSaveDialog(null);
         if (selectedFile != null) {
