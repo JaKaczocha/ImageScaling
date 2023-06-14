@@ -70,6 +70,10 @@ public class PrimaryController {
     boolean selected = false;
 
     @FXML
+    private javafx.scene.control.Label orginalOutputImageSize;
+    @FXML
+    private javafx.scene.control.Label orginalImageSize;
+    @FXML
     private TextArea inputSize;
     @FXML
     private TextArea outputSize;
@@ -104,6 +108,8 @@ public class PrimaryController {
             Image image = new Image(selectedFile.toURI().toString());
             heightBefore = (int) image.getHeight();
             widthBefore = (int) image.getWidth();
+
+            orginalImageSize.setText("( " + widthBefore + "," + heightBefore + " )");
 
             imageBefore.setFitHeight(image.getHeight());
             imageBefore.setFitWidth(image.getWidth());
