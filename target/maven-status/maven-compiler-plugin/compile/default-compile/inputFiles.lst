@@ -1,6 +1,18 @@
+<<<<<<< HEAD
 C:\Users\user\IdeaProjects\ImageScaling2\src\main\java\org\example\PrimaryController.java
 C:\Users\user\IdeaProjects\ImageScaling2\src\main\java\org\example\ImageViewer.java
 C:\Users\user\IdeaProjects\ImageScaling2\src\main\java\org\example\App.java
 C:\Users\user\IdeaProjects\ImageScaling2\src\main\java\module-info.java
 C:\Users\user\IdeaProjects\ImageScaling2\src\main\java\org\example\Main.java
 C:\Users\user\IdeaProjects\ImageScaling2\src\main\java\org\example\SecondaryController.java
+=======
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\org\example\Main.java
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\org\example\utils\Lang.java
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\org\example\ImageViewer.java
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\org\example\App.java
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\module-info.java
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\org\example\utils\LangChoice.java
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\org\example\PrimaryController.java
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\org\example\utils\LangEnum.java
+C:\Users\User\Desktop\obrazkiOstateczne\ImageScaling\src\main\java\org\example\SecondaryController.java
+>>>>>>> feature-gui_update

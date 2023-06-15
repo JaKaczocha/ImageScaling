@@ -1,0 +1,91 @@
+/* Ustawienia dla elementów o klasie .label */
+.label {
+    -fx-font-size: 8pt; /* Zmiana rozmiaru czcionki */
+    -fx-min-width: 20pt; /* Zmiana minimalnej szerokości */
+    -fx-min-height: 12pt; /* Zmiana minimalnej wysokości */
+    -fx-max-width: 170pt; /* Ustawienie maksymalnej szerokości na równą minimalnej */
+    -fx-max-height: 12pt; /* Ustawienie maksymalnej wysokości na równą minimalnej */
+}
+
+#titlelabel {
+    -fx-font-size: 18pt; /* Zmiana rozmiaru czcionki */
+    -fx-pref-width: 200pt; /* Zmiana preferowanej szerokości */
+    -fx-min-width: 200pt; /* Zmiana minimalnej szerokości */
+    -fx-max-width: 400pt; /* Zmiana maksymalnej szerokości */
+    -fx-pref-height: 28pt; /* Zmiana preferowanej wysokości */
+    -fx-min-height: 28pt; /* Zmiana minimalnej wysokości */
+    -fx-max-height: 28pt; /* Zmiana maksymalnej wysokości */
+
+}
+
+/* Ustawienia dla elementów o klasie .button */
+.button {
+    -fx-font-size: 8pt; /* Zmiana rozmiaru czcionki */
+    -fx-min-width: 48pt; /* Zmiana minimalnej szerokości */
+    -fx-min-height: 16pt; /* Zmiana minimalnej wysokości */
+    -fx-max-width: 48pt; /* Ustawienie maksymalnej szerokości na równą minimalnej */
+    -fx-max-height: 16pt; /* Ustawienie maksymalnej wysokości na równą minimalnej */
+}
+
+/* Ustawienia dla elementów o klasie .radio-button */
+.radio-button {
+    -fx-font-size: 8pt; /* Zmiana rozmiaru czcionki */
+    -fx-min-width: 32pt; /* Zmiana minimalnej szerokości */
+    -fx-min-height: 12pt; /* Zmiana minimalnej wysokości */
+    -fx-max-width: 150pt; /* Ustawienie maksymalnej szerokości na równą minimalnej */
+    -fx-max-height: 12pt; /* Ustawienie maksymalnej wysokości na równą minimalnej */
+}
+
+/* Ustawienia dla elementów o klasie .menu */
+.menu {
+    -fx-font-size: 8pt; /* Zmiana rozmiaru czcionki */
+    -fx-min-width: 60pt; /* Zmiana minimalnej szerokości */
+    -fx-min-height: 16pt; /* Zmiana minimalnej wysokości */
+    -fx-max-width: 60pt; /* Ustawienie maksymalnej szerokości na równą minimalnej */
+    -fx-max-height: 12pt; /* Ustawienie maksymalnej wysokości na równą minimalnej */
+}
+
+/* Ustawienia dla elementów o klasie .menu-item */
+.menu-item {
+    -fx-font-size: 8pt; /* Zmiana rozmiaru czcionki */
+    -fx-min-width: 48pt; /* Zmiana minimalnej szerokości */
+    -fx-min-height: 12pt; /* Zmiana minimalnej wysokości */
+    -fx-max-width: 48pt; /* Ustawienie maksymalnej szerokości na równą minimalnej */
+    -fx-max-height: 12pt; /* Ustawienie maksymalnej wysokości na równą minimalnej */
+}
+
+/* Ustawienia dla elementów o klasie .slider */
+.slider {
+    -fx-font-size: 8pt; /* Zmiana rozmiaru czcionki */
+    -fx-min-width: 80pt; /* Zmiana minimalnej szerokości */
+    -fx-min-height: 16pt; /* Zmiana minimalnej wysokości */
+    -fx-max-width: 500pt; /* Ustawienie maksymalnej szerokości na równą minimalnej */
+    -fx-max-height: 16pt; /* Ustawienie maksymalnej wysokości na równą minimalnej */
+}
+
+#appTitle {
+  -fx-font-size: 10pt; /* Zmiana rozmiaru czcionki */
+  -fx-font-weight: bold;
+}
+
+
+#imageContainer1, #imageContainer2 {
+    -fx-alignment: center;
+}
+
+#size1, #size2 {
+    -fx-alignment: center;
+}
+
+#sizeView1, #sizeView2 {
+
+    -fx-font-size: 12pt; /* Zmiana rozmiaru czcionki */
+    -fx-min-width: 20pt; /* Zmiana minimalnej szerokości */
+    -fx-min-height: 16pt; /* Zmiana minimalnej wysokości */
+    -fx-max-width: 170pt; /* Ustawienie maksymalnej szerokości na równą minimalnej */
+     -fx-max-height: 19pt; /* Ustawienie maksymalnej wysokości na równą minimalnej */
+}
+
+
+
+

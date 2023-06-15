@@ -35,7 +35,13 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         scene = new Scene(loadFXML("layout2"));
         primaryStage.setScene(scene);
+<<<<<<< HEAD
         primaryStage.setTitle("Interpolacja Obrazu");
+=======
+
+        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("ki.jpg")));
+
+>>>>>>> feature-gui_update
         primaryStage.show();
     }
 
@@ -64,6 +70,12 @@ public class App extends Application {
         String fileName1 = "tmp.png"; // nazwa pliku
         File file1 = new File(fileName1); // tworzenie obiektu klasy File
         boolean deleted1 = file1.delete(); // usuwanie pliku i zapisanie wyniku w zmiennej deleted
+<<<<<<< HEAD
+=======
+        String fileName4 = "tmpInputImage.png";
+        File file4 = new File(fileName4);
+        file4.delete();
+>>>>>>> feature-gui_update
     }
 
 }

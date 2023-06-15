@@ -1,8 +1,21 @@
+<<<<<<< HEAD
+=======
+org\example\PrimaryController$3.class
+org\example\PrimaryController.class
+org\example\utils\LangEnum.class
+org\example\PrimaryController$2.class
+>>>>>>> feature-gui_update
 org\example\PrimaryController$1.class
 module-info.class
 org\example\Main.class
 org\example\SecondaryController.class
 org\example\App.class
+<<<<<<< HEAD
 org\example\PrimaryController.class
 org\example\ImageViewer.class
 org\example\PrimaryController$2.class
+=======
+org\example\ImageViewer.class
+org\example\utils\Lang.class
+org\example\utils\LangChoice.class
+>>>>>>> feature-gui_update
