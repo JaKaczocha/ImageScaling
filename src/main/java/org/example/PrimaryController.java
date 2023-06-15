@@ -20,8 +20,7 @@ import java.awt.Label;
 import java.awt.TextArea;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class PrimaryController {
 
@@ -70,6 +69,10 @@ public class PrimaryController {
     boolean selected = false;
 
     @FXML
+    private javafx.scene.control.Label orginalOutputImageSize;
+    @FXML
+    private javafx.scene.control.Label orginalImageSize;
+    @FXML
     private TextArea inputSize;
     @FXML
     private TextArea outputSize;
@@ -105,18 +108,24 @@ public class PrimaryController {
             heightBefore = (int) image.getHeight();
             widthBefore = (int) image.getWidth();
 
+            orginalImageSize.setText(widthBefore + " x " + heightBefore );
+
             imageBefore.setFitHeight(image.getHeight());
             imageBefore.setFitWidth(image.getWidth());
             imageBefore.setPreserveRatio(true);
             imageBefore.setImage(image);
             inputImage = ImageIO.read(selectedFile);
             outputImage = null;
-            imageAfter.setImage(null);
+            imageAfter.setImage(image);
             selected = true;
 
             mySlider.setValue(100.0);
             zoomSlider.setValue(0.0);
             zoomInputSlider.setValue(0.0);
+
+            orginalOutputImageSize.setText( widthBefore + " x " +  heightBefore);
+
+
         }
     }
 
@@ -149,6 +158,9 @@ public class PrimaryController {
 
         int Width = (int) ((mySlider.getValue() / 100) * widthBefore);
         int Height = (int) ((mySlider.getValue() / 100) * heightBefore);
+
+        orginalOutputImageSize.setText( Width + " x " + Height);
+
         System.out.println(Width + " " + Height);
         if (nearestNeighbor.isSelected()) {
             method = 1;
@@ -274,6 +286,13 @@ public class PrimaryController {
                 interpolation,
                 zoomInputLabel,
                 zoomOutputLabel);
+
+
+
+        if(checkFirstLineEquals()) {
+            langUtility.setLanguage(LangChoice.ENG);
+        }
+
 
 
         mySlider.setValue(100.0);
@@ -597,13 +616,52 @@ public class PrimaryController {
         switch (selectedLang) {
             case PL:
                 System.out.println("Wybrano język polski");
+                updateSettingsFilePL();
                 langUtility.setLanguage(LangChoice.PL);
                 break;
             case EN:
                 System.out.println("Wybrano język angielski");
+                updateSettingsFileENG();
                 langUtility.setLanguage(LangChoice.ENG);
                 break;
         }
+    }
+
+    public static void updateSettingsFileENG() {
+        String filePath = "dependency/settings.txt";
+        String newContent = "language=ANG";
+
+        // Usunięcie zawartości pliku
+        try {
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(newContent);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void updateSettingsFilePL() {
+        String filePath = "dependency/settings.txt";
+        String newContent = "language=PL";
+
+        // Usunięcie zawartości pliku
+        try {
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(newContent);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean checkFirstLineEquals() {
+        try (BufferedReader br = new BufferedReader(new FileReader("dependency/settings.txt"))) {
+            String firstLine = br.readLine();
+            return firstLine != null && firstLine.equals("language=ANG");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

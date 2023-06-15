@@ -13,30 +13,30 @@ public class Lang {
 
     static {
         engMap = new HashMap<>();
-        engMap.put(LangEnum.APP_TITLE, "Image Interpolation");
+        engMap.put(LangEnum.APP_TITLE, "IMAGE SCALING");
         engMap.put(LangEnum.SETTINGS, "Settings");
         engMap.put(LangEnum.LANGUAGES, "Languages");
         engMap.put(LangEnum.LOAD, "Load");
         engMap.put(LangEnum.SAVE, "Save");
-        engMap.put(LangEnum.CHOOSE_METHOD, "Choose method:");
-        engMap.put(LangEnum.NEAREST_NEIGHBOUR, "nearest neighbour");
-        engMap.put(LangEnum.BICUBIC, "bicubic");
-        engMap.put(LangEnum.BILINEAR, "bilinear");
-        engMap.put(LangEnum.INTERPOLATION, "Interpolation:");
+        engMap.put(LangEnum.CHOOSE_METHOD, "Choose interpolation method:");
+        engMap.put(LangEnum.NEAREST_NEIGHBOUR, "Nearest neighbour");
+        engMap.put(LangEnum.BICUBIC, "Bicubic");
+        engMap.put(LangEnum.BILINEAR, "Bilinear");
+        engMap.put(LangEnum.INTERPOLATION, "Scale:");
         engMap.put(LangEnum.INPUT_ZOOM, "Input zoom:");
         engMap.put(LangEnum.OUTPUT_ZOOM, "Output zoom:");
 
         plMap = new HashMap<>();
-        plMap.put(LangEnum.APP_TITLE, "Interpolacja Obrazów");
+        plMap.put(LangEnum.APP_TITLE, "SKALOWANIE OBRAZÓW");
         plMap.put(LangEnum.SETTINGS, "Ustawienia");
         plMap.put(LangEnum.LANGUAGES, "Języki");
         plMap.put(LangEnum.LOAD, "Wczytaj");
         plMap.put(LangEnum.SAVE, "Zapisz");
-        plMap.put(LangEnum.CHOOSE_METHOD, "Wybierz metodę:");
-        plMap.put(LangEnum.NEAREST_NEIGHBOUR, "najbliższego sąsiada");
-        plMap.put(LangEnum.BICUBIC, "dwukubiczna");
-        plMap.put(LangEnum.BILINEAR, "dwuliniowa");
-        plMap.put(LangEnum.INTERPOLATION, "Interpolacja:");
+        plMap.put(LangEnum.CHOOSE_METHOD, "Wybierz metodę interpolacji:");
+        plMap.put(LangEnum.NEAREST_NEIGHBOUR, "Najbliższego sąsiada");
+        plMap.put(LangEnum.BICUBIC, "Dwukubiczna");
+        plMap.put(LangEnum.BILINEAR, "Dwuliniowa");
+        plMap.put(LangEnum.INTERPOLATION, "Skala:");
         plMap.put(LangEnum.INPUT_ZOOM, "Przybliżenie wejścia:");
         plMap.put(LangEnum.OUTPUT_ZOOM, "Przybliżenie wyjścia:");
 
